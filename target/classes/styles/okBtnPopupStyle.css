@@ -1,0 +1,31 @@
+* {
+    -dColor1: #FEBE10;
+    -dColor2: #F7901E;
+    -backColor1: #233A4B;
+}
+root {
+    -fx-font-smoothing-type: true;
+}
+#popupBase {
+    -fx-background-color: -backColor1;
+    -fx-border-color: -dColor1;
+}
+#popupContent {
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: Bold;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+#okay {
+    -fx-background-color: -dColor1;
+    -fx-background-radius: 12px;
+    -fx-font-weight: Bold;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+#okay:hover {
+    -fx-border-color: white;
+    -fx-border-radius: 12px;
+    -fx-border-width: 2;
+    -fx-border-insets: -2;
+}
