@@ -5,15 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Callback;
 import moa.Main;
 import moa.dao.EclassDAO;
 import moa.dao.SmartATDAO;
@@ -26,7 +20,7 @@ public class SubjectPageController {
     public HBox topBar;
     public Label minimum;
     public Label close;
-    public ListView subjectListView;
+    public VBox subjectListVBox;
     public ScrollPane listViewScroll;
     public Label major;
     public Label grade;
@@ -38,19 +32,26 @@ public class SubjectPageController {
     private int subjectSize;
 
     public SubjectPageController() {
-        eclassDAOArrayList = new ArrayList<>();
-        smartATDAOArrayList = new ArrayList<>();
+        System.out.println("call const");
     }
     private void setSize() {
         mySubjectTextBack.setPrefWidth(listViewScroll.getPrefWidth() - infoBack.getPrefWidth());
-        addSubjectElement();
     }
-    public void call(){
+    public void call(int subjectSize, ArrayList<EclassDAO> eclassDAOArrayList, ArrayList<SmartATDAO> smartATDAOArrayList){
+        System.out.println(subjectSize);
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/subject_page.fxml"));
-            Parent root = loader.load();
-            SubjectPageController subjectPageController = loader.getController();
+            eclassDAOArrayList = new ArrayList<>();
+            smartATDAOArrayList = new ArrayList<>();
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/subject_page.fxml"));
+
+            SubjectPageController subjectPageController = new SubjectPageController();
+            subjectPageController.setEclassDAOArrayList(eclassDAOArrayList);
+            subjectPageController.setSmartATDAOArrayList(smartATDAOArrayList);
+            subjectPageController.setSubjectSize(subjectSize);
+            loader.setController(subjectPageController);
+
+            Parent root = loader.load();
             Scene scene = new Scene(root);
 
             Main.getPrimaryStage().setScene(scene);
@@ -65,29 +66,35 @@ public class SubjectPageController {
     void initialize() {
         CustomTopBar.configurationTopBar(topBar, minimum, close);
         setSize();
+        addSubjectElement();
     }
     public void addSubjectElement() {
-        subjectListView.getItems().clear();
         for (int i = 0; i < subjectSize; i++) {
             try {
+                System.out.println("addSubject");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/subject_element.fxml"));
-                HBox cell = loader.load();
+                HBox subjectElement = loader.load();
                 SubjectElementPageController subjectElementController = loader.getController();
-                subjectElementController.setData(eclassDAOArrayList.get(i), smartATDAOArrayList.get(i));
-
-
+//                subjectElementController.setData(eclassDAOArrayList.get(i), smartATDAOArrayList.get(i));
+                subjectElementController.setData(null, null);
+                subjectListVBox.getChildren().add(subjectElement);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //subjectListView.getItems().add();
+
         }
     }
 
-    public void setSubjectSize(int n) {subjectSize = n;}
-    public void addEclassDAO(EclassDAO eclassDAO) {
-        eclassDAOArrayList.add(eclassDAO);
+    public void setSubjectSize(int n) {
+        System.out.println(subjectSize);
+        subjectSize = n;
     }
-    public void addSmartDAO(SmartATDAO smartATDAO) {
-        smartATDAOArrayList.add(smartATDAO);
+
+    public void setEclassDAOArrayList(ArrayList<EclassDAO> eclassDAOArrayList) {
+        this.eclassDAOArrayList = eclassDAOArrayList;
+    }
+
+    public void setSmartATDAOArrayList(ArrayList<SmartATDAO> smartATDAOArrayList) {
+        this.smartATDAOArrayList = smartATDAOArrayList;
     }
 }

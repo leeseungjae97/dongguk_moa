@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.geometry.Insets?>
-<HBox xmlns="http://javafx.com/javafx"
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Line?>
+<HBox fx:id="background" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="moa.controllers.SubjectElementPageController"
-      prefHeight="139.0" prefWidth="476.0">
+      prefHeight="139" prefWidth="476"
+      stylesheets="/styles/subjectElementStyle.css">
+
+<!--  139, 476  -->
     <VBox fx:id="currentLectureInfoBox" prefWidth="230" prefHeight="120">
+<!--    230 120    -->
         <padding>
             <Insets top="5" bottom="5"/>
         </padding>
@@ -24,8 +26,10 @@
         </HBox>
     </VBox>
     <VBox fx:id="lectureATBox" prefWidth="230" prefHeight="120">
+        <!--    230 120    -->
         <HBox>
             <Label fx:id="green" prefHeight="50" prefWidth="50"/>
+            <!--    50 50    -->
             <Label fx:id="red" prefHeight="50" prefWidth="50"/>
             <Label fx:id="blue" prefHeight="50" prefWidth="50"/>
         </HBox>

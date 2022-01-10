@@ -9,7 +9,11 @@
 root {
     -fx-font-smoothing-type: true;
 }
+#background {
+    -fx-background-color: -backColor1;
+}
 #lectureName, #lectureWeek, #date, #startLectureText {
+    -fx-background-color: -backColor1;
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-family: "Segoe UI";

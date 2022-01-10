@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -38,6 +39,9 @@ public class LoginController {
     public SubjectPageController subjectPageController;
     private ChromeOptions chromeHeadlessOption;
     private Preferences saveIDPW;
+    private ArrayList<EclassDAO> eclassDAOArrayList;
+    private ArrayList<SmartATDAO> smartATDAOArrayList;
+    private int subjectSize;
 
     @FXML
     void initialize() {
@@ -46,6 +50,8 @@ public class LoginController {
         chromeHeadlessOption = new ChromeOptions();
         chromeHeadlessOption.addArguments(DRIVER_HEADLESS);
         subjectPageController = new SubjectPageController();
+        eclassDAOArrayList = new ArrayList<>();
+        smartATDAOArrayList = new ArrayList<>();
         saveIDPW = Preferences.userRoot();
         checkIDPWSave();
     }
@@ -126,7 +132,7 @@ public class LoginController {
             WebElement subjectTable = eClassDriver.findElement(By.id("mCSB_1"));
             List<WebElement> subjectsSize = subjectTable.findElements(By.tagName("button"));
 
-            subjectPageController.setSubjectSize(subjectsSize.size());
+            subjectSize = subjectsSize.size();
             
             //내 강의실 목록의 버튼 및 강의이름 가져오기
             for (int i = 0; i < subjectsSize.size(); i++) {
@@ -137,7 +143,7 @@ public class LoginController {
                 EclassDAO eclassDAO = new EclassDAO(subjectName.get(i).getText());
                 clickableSubjects.get(i).click();
                 getEclassSubjects(eclassDAO, eClassDriver);
-                subjectPageController.addEclassDAO(eclassDAO);
+                eclassDAOArrayList.add(eclassDAO);
             }
 
         } catch(UnhandledAlertException e) {
@@ -176,7 +182,7 @@ public class LoginController {
             System.out.println(gray1Text + " " + gray2Text);
 
             SmartATDAO smartATDAO = new SmartATDAO(greenText, redText, blueText, gray1Text, gray2Text);
-            subjectPageController.addSmartDAO(smartATDAO);
+            smartATDAOArrayList.add(smartATDAO);
 
             smartDriver.navigate().back();
 
@@ -227,15 +233,13 @@ public class LoginController {
         String id = idTextField.getText().toString();
         String password = pwTextField.getText().toString();
 //        getSmartPage(id, password);
-        getEclassPage(id, password);
-
-        subjectPageController.call();
+//        getEclassPage(id, password);
+        subjectPageController.call(2, eclassDAOArrayList, smartATDAOArrayList);
     }
     public void checkIDPWSave() {
         if(!saveIDPW.get("id", "").equals("") && !saveIDPW.get("pw", "").equals("")) {
             idTextField.setText(saveIDPW.get("id", ""));
             pwTextField.setText(saveIDPW.get("pw", ""));
-            System.out.println(saveIDPW.get("pw", ""));
             idPwSave.setSelected(true);
         }
     }

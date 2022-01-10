@@ -46,7 +46,7 @@ root {
 #scrollBack {
     -fx-background-color: -backColor1;
 }
-#subjectListView {
+#subjectListVBox {
     -fx-background-color: -backColor1;
     -fx-border-color: -dColor1;
     -fx-border-width: 2px;
