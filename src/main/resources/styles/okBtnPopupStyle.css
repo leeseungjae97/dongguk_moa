@@ -12,14 +12,14 @@ root {
 }
 #popupContent {
     -fx-font-family: "Segoe UI";
-    -fx-font-weight: Bold;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-font-size: 12px;
 }
 #okay {
     -fx-background-color: -dColor1;
     -fx-background-radius: 12px;
-    -fx-font-weight: Bold;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-font-size: 15px;
 }

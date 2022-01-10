@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.geometry.Insets?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="moa.controllers.SubjectElementPageController"
+      prefHeight="139.0" prefWidth="476.0">
+    <VBox fx:id="currentLectureInfoBox" prefWidth="230" prefHeight="120">
+        <padding>
+            <Insets top="5" bottom="5"/>
+        </padding>
+        <HBox VBox.vgrow="ALWAYS">
+            <Label fx:id="lectureName"/>
+            <Label fx:id="lectureWeek" alignment="CENTER_RIGHT"/>
+        </HBox>
+        <HBox fx:id="startLectureBtn" alignment="BOTTOM_CENTER">
+            <Label fx:id="date"/>
+            <Label fx:id="startLectureText"/>
+        </HBox>
+    </VBox>
+    <VBox fx:id="lectureATBox" prefWidth="230" prefHeight="120">
+        <HBox>
+            <Label fx:id="green" prefHeight="50" prefWidth="50"/>
+            <Label fx:id="red" prefHeight="50" prefWidth="50"/>
+            <Label fx:id="blue" prefHeight="50" prefWidth="50"/>
+        </HBox>
+        <HBox>
+            <Label fx:id="gray1"/>
+            <Label fx:id="gray2"/>
+        </HBox>
+    </VBox>
+    <Line fx:id="bottomLine" scaleX="0.3" HBox.hgrow="ALWAYS" />
+</HBox>

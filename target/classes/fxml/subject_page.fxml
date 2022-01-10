@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<BorderPane xmlns="http://javafx.com/javafx"
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane fx:id="subjectPageBack" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="moa.controllers.SubjectPageController"
-            prefHeight="550.0" prefWidth="500.0">
+            prefHeight="500.0" prefWidth="550.0" stylesheets="/styles/subjectPageStyle.css">
+    <top>
+        <HBox fx:id="topBar" alignment="CENTER_RIGHT" spacing="10">
+            <Label fx:id="minimum" HBox.hgrow="ALWAYS"/>
+            <Label fx:id="close">
+                <HBox.margin>
+                    <Insets right="10"/>
+                </HBox.margin>
+            </Label>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fx:id="listViewScroll" prefWidth="550">
+            <VBox fx:id="scrollBack" prefWidth="535" spacing="5">
+                <padding>
+                    <Insets top="5" right="5" left="5"/>
+                </padding>
+                <HBox fx:id="scrollTop" prefWidth="535">
+                    <VBox fx:id="infoBack" prefHeight="110" prefWidth="150" spacing="9">
+                        <padding>
+                            <Insets left="5" top="5"/>
+                        </padding>
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label fx:id="myInfoText" text="내 정보" textAlignment="CENTER">
+                                <padding>
+                                    <Insets left="2" right="2" top="-0.5" bottom="-0.5"/>
+                                </padding>
+                            </Label>
+                            <padding>
+                                <Insets right="5"/>
+                            </padding>
+                        </HBox>
+                        <HBox>
+                            <Label fx:id="majorText" text="학부 : "/>
+                            <Label fx:id="major" text="컴퓨터공학과"/>
+                        </HBox>
+                        <HBox>
+                            <Label fx:id="numText" text="학번 : "/>
+                            <Label fx:id="num" text="2016210162"/>
+                        </HBox>
+                        <HBox>
+                            <Label fx:id="gradeText" text="학년 : "/>
+                            <Label fx:id="grade" text="3학년"/>
+                        </HBox>
+                    </VBox>
 
+                    <HBox fx:id="mySubjectTextBack" alignment="BOTTOM_RIGHT">
+                        <Label fx:id="mySubjectsText" text="내 수업 정보"/>
+                    </HBox>
+                </HBox>
+                <ListView fx:id="subjectListView"/>
+            </VBox>
+        </ScrollPane>
+    </center>
 </BorderPane>

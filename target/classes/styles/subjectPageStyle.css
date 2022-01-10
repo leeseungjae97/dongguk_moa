@@ -1,0 +1,53 @@
+* {
+    -dColor1: #FEBE10;
+    -dColor2: #F7901E;
+    -backColor1: #233A4B;
+}
+root {
+    -fx-font-smoothing-type: true;
+}
+
+#topBar {
+    -fx-background-color: -dColor1;
+}
+
+#subjectPageBack {
+    -fx-background-color: -backColor1;
+}
+
+#majorText, #numText, #gradeText, #major, #num, #grade {
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+}
+
+#mySubjectsText {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+}
+
+#infoBack {
+    -fx-border-color: -dColor1;
+}
+#myInfoText {
+    -fx-text-fill: -dColor2;
+    -fx-font-size: 10px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+#listViewScroll {
+    -fx-background-color: -backColor1;
+}
+#scrollBack {
+    -fx-background-color: -backColor1;
+}
+#subjectListView {
+    -fx-background-color: -backColor1;
+    -fx-border-color: -dColor1;
+    -fx-border-width: 2px;
+}

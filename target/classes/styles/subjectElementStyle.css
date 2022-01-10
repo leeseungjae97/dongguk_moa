@@ -1,0 +1,50 @@
+* {
+    -dColor1: #FEBE10;
+    -dColor2: #F7901E;
+    -backColor1: #233A4B;
+    -dGreen: #0AA699;
+    -dRed: #F35958;
+    -dBlue: #0090D9;
+}
+root {
+    -fx-font-smoothing-type: true;
+}
+#lectureName, #lectureWeek, #date, #startLectureText {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+}
+#startLectureBtn {
+    -fx-background-color: -dGreen;
+    -fx-background-radius: 5px;
+}
+#currentLectureInfoBox, #lectureATBox {
+    -fx-background-color: -backColor1;
+    -fx-background-radius: 5px;
+    -fx-border-color: #FEBE10;
+    -fx-border-radius: 5px;
+}
+#green, #red, #blue {
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15px;
+}
+#green {
+    -fx-background-color: -dGreen;
+}
+#red {
+    -fx-background-color: -dRed;
+}
+#blue {
+    -fx-background-color: -dBlue;
+}
+#gray1, #gray2 {
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15px;
+}
+#bottomLine {
+    -fx-background-color: -dColor1;
+}

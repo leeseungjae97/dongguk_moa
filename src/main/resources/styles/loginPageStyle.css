@@ -17,18 +17,18 @@ root {
     -fx-font-size: 15px;
     -fx-text-fill: white;
     -fx-font-family: "Segoe UI";
-    -fx-font-weight: Bold;
+    -fx-font-weight: bold;
 }
 #checkBoxName {
     -fx-font-size: 10px;
     -fx-text-fill: white;
     -fx-font-family: "Segoe UI";
-    -fx-font-weight: Bold;
+    -fx-font-weight: bold;
 }
 .text-field, .password-field {
     -fx-font-size: 13px;
     -fx-font-family: 'Segoe UI';
-    -fx-font-weight: Bold;
+    -fx-font-weight: bold;
     -fx-faint-focus-color: #FFFFFF00;
 }
 #idPwSave {
@@ -40,7 +40,7 @@ root {
     -fx-background-color: -dColor1;
     -fx-background-radius: 12;
     -fx-font-family: "Segoe UI";
-    -fx-font-weight: Bold;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
 }
 #loginBtn:hover {

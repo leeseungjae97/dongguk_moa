@@ -33,16 +33,16 @@
             <HBox alignment="CENTER_RIGHT" spacing="5">
                <Label fx:id="idText" text="학번/ID"/>
                <TextField fx:id="idTextField"
-                          prefHeight="31" prefWidth="158" promptText="학번"/>
+                          prefHeight="31" prefWidth="158" promptText="학번" onKeyReleased="#inputIdText"/>
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="5">
                <Label fx:id="pwText" text="비밀번호"/>
-               <PasswordField fx:id="psTextField"
-                              prefHeight="31" prefWidth="158" promptText="비밀번호"/>
+               <PasswordField fx:id="pwTextField"
+                              prefHeight="31" prefWidth="158" promptText="비밀번호" onKeyReleased="#inputPwText" />
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="5">
                <Label fx:id="checkBoxName" text="ID/PW 저장"/>
-               <JFXCheckBox fx:id="idPwSave"/>
+               <JFXCheckBox fx:id="idPwSave" onAction="#clickSave"/>
             </HBox>
             <HBox alignment="CENTER">
                <Button fx:id="loginBtn" mnemonicParsing="false" text="로그인" alignment="CENTER"
