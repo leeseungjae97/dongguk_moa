@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import moa.dao.EclassDAO;
@@ -37,11 +36,14 @@ public class LoginController {
     public Button loginBtn;
     public PasswordField pwTextField;
     public SubjectPageController subjectPageController;
+
     private ChromeOptions chromeHeadlessOption;
     private Preferences saveIDPW;
     private ArrayList<EclassDAO> eclassDAOArrayList;
     private ArrayList<SmartATDAO> smartATDAOArrayList;
     private int subjectSize;
+    private String name;
+    private String num;
 
     @FXML
     void initialize() {
@@ -56,7 +58,7 @@ public class LoginController {
         checkIDPWSave();
     }
 
-    public void getSmartPage(String id, String password) {
+    public synchronized void getSmartPage(String id, String password) {
         if(id.equals("") || password.equals("")) {
             new OkBtnPopupController().call();
             return;
@@ -66,19 +68,18 @@ public class LoginController {
         try {
             smartATDriver.get(SMART_ATTENDANCE);
 
-            WebElement smartLoginBtn = new WebDriverWait(smartATDriver, Duration.ofSeconds(2))
+            WebElement smartLoginBtn = new WebDriverWait(smartATDriver, Duration.ofSeconds(5))
                     .until(ExpectedConditions.elementToBeClickable(By.id("login")));
 
             WebElement smartId = smartATDriver.findElement(By.id("loginId"));
             WebElement smartPassword = smartATDriver.findElement(By.id("password"));
-//        WebElement smartLoginBtn = smartAtDriver.findElement(By.linkText("로그인"));
 
             smartId.sendKeys(id);
             smartPassword.sendKeys(password);
 
             smartLoginBtn.click();
 
-            new WebDriverWait(smartATDriver, Duration.ofSeconds(2))
+            new WebDriverWait(smartATDriver, Duration.ofSeconds(5))
                     .until(ExpectedConditions.elementToBeClickable(By.id("view_today")));
 
             WebElement subjectTable = smartATDriver.findElement(By.id("lecture"));
@@ -90,19 +91,25 @@ public class LoginController {
                 clickableSubjects.get(i).click();
                 getSmartATs(smartATDriver);
             }
+
         } catch (UnhandledAlertException e) {
             new OkBtnPopupController().call();
+            e.printStackTrace();
             smartATDriver.quit();
             idTextField.setText("");
             pwTextField.setText("");
-        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) { smartATDriver.quit(); }
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            e.printStackTrace();
+            smartATDriver.quit();
+        }
 
     }
-    public void getEclassPage(String id, String password) {
+    public synchronized void getEclassPage(String id, String password) {
         if(id.equals("") || password.equals("")) {
             new OkBtnPopupController().call();
             return;
         }
+
         WebDriver eClassDriver = new ChromeDriver(chromeHeadlessOption);
         try {
 
@@ -129,6 +136,11 @@ public class LoginController {
                 new WebDriverWait(eClassDriver, Duration.ofSeconds(5))
                         .until(ExpectedConditions.elementToBeClickable(By.tagName("b")));
 
+            WebElement nameElement = eClassDriver.findElement(By.cssSelector("p[class='mt5']"));
+
+            num = nameElement.getText().substring(0, 9); //4자리 + 3자리 + 3자리 = 10자리
+            name = nameElement.getText().substring(11, nameElement.getText().length() -2); // 10자리 + (ooo)
+
             WebElement subjectTable = eClassDriver.findElement(By.id("mCSB_1"));
             List<WebElement> subjectsSize = subjectTable.findElements(By.tagName("button"));
 
@@ -137,8 +149,8 @@ public class LoginController {
             //내 강의실 목록의 버튼 및 강의이름 가져오기
             for (int i = 0; i < subjectsSize.size(); i++) {
                 WebElement clickSubjectTable = eClassDriver.findElement(By.id("mCSB_1"));
-                List<WebElement> clickableSubjects = clickSubjectTable.findElements(By.tagName("button"));
-                List<WebElement> subjectName = subjectTable.findElements(By.className("boardTxt"));
+                List<WebElement> clickableSubjects = clickSubjectTable.findElements(By.cssSelector("button[type='button']"));
+                List<WebElement> subjectName = clickSubjectTable.findElements(By.className("boardTxt"));
 
                 EclassDAO eclassDAO = new EclassDAO(subjectName.get(i).getText());
                 clickableSubjects.get(i).click();
@@ -151,9 +163,12 @@ public class LoginController {
             eClassDriver.quit();
             idTextField.setText("");
             pwTextField.setText("");
-        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) { eClassDriver.quit(); }
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            e.printStackTrace();
+            eClassDriver.quit();
+        }
     }
-    public void getSmartATs(WebDriver smartDriver) {
+    public synchronized void getSmartATs(WebDriver smartDriver) {
         // div.col-md-12 > div > div > row[1]
         // 출석 :  div class='content-wrapper green' > div > h3 > span class='semi-bold'.text
         // 결석 :  div class='content-wrapper red' > div > h3 > span class='semi-bold'.text
@@ -178,9 +193,6 @@ public class LoginController {
             String gray1Text = gray1.findElements(By.className("semi-bold")).get(1).getText();
             String gray2Text = gray2.findElements(By.className("semi-bold")).get(1).getText();
 
-            System.out.println(greenText + " " + redText + " " + blueText);
-            System.out.println(gray1Text + " " + gray2Text);
-
             SmartATDAO smartATDAO = new SmartATDAO(greenText, redText, blueText, gray1Text, gray2Text);
             smartATDAOArrayList.add(smartATDAO);
 
@@ -188,32 +200,38 @@ public class LoginController {
 
             new WebDriverWait(smartDriver, Duration.ofSeconds(5))
                     .until(ExpectedConditions.elementToBeClickable(By.id("view_today")));
-        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) { smartDriver.quit(); }
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            e.printStackTrace();
+        }
     }
-    public void getEclassSubjects(EclassDAO eclassDAO, WebDriver eClassDriver) {
+    public synchronized void getEclassSubjects(EclassDAO eclassDAO, WebDriver eClassDriver) {
         //회상강의 시작
         // > ul > li.text ="[보강] @강 [2021-01-01 09:30]"
         // class=btn btn-orange fcWhite
         // title="화상강의 시작"
         try {
             new WebDriverWait(eClassDriver, Duration.ofSeconds(5))
-                    .until(ExpectedConditions.elementToBeClickable((By.linkText("화상강의 시작"))));
+                    .until(ExpectedConditions.invisibilityOfElementLocated(By.name("i.icon-list-white")));
 
             List<WebElement> subjectVideos = eClassDriver.findElements(By.cssSelector("div[class='video on']"));
+            System.out.println(subjectVideos.size());
             for (WebElement element : subjectVideos) {
-                WebElement startLectureBtn = null;
+                String startLectureBtn = "";
                 WebElement prevLecture = null;
                 String date = "";
-
-                try {
-                    startLectureBtn = element.findElement(By.cssSelector("a[class='btn btn-orange fcWhite']"));
-                    prevLecture = element.findElement(By.cssSelector("a[class='btn btn-blue\t fcWhite']"));
-                    date = element.findElement(By.xpath("ul[1]/li")).getText();
-                } catch (NoSuchElementException e) {
+                ///ul[3]/li/a[2]
+                startLectureBtn = element.findElement(By.cssSelector("a[class='btn btn-orange fcWhite']")).getText();
+                if(startLectureBtn.equals("출결정보")) {
+                    prevLecture = element.findElement(By.xpath("ul[3]/li/a[2]"));
                 }
+                //btn btn-bluef  cWhite
+                date = element.findElement(By.xpath("ul[1]/li")).getText();
+                System.out.println("date : " + date);
+
                 EclassLectureDAO eclassLectureDAO = new EclassLectureDAO(startLectureBtn, prevLecture, date);
                 eclassDAO.addEclassLectureDAO(eclassLectureDAO);
             }
+
             List<WebElement> cols = eClassDriver.findElements(By.cssSelector("th[scope='col']"));
             for (int i = 0; i < cols.size(); i++) {
                 System.out.println(cols.get(i).getText());
@@ -227,14 +245,17 @@ public class LoginController {
             new WebDriverWait(eClassDriver, Duration.ofSeconds(5))
                     .until(ExpectedConditions.elementToBeClickable(By.id("mCSB_1")));
 
-        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) { eClassDriver.quit(); }
+        } catch (TimeoutException | NoSuchElementException | StaleElementReferenceException e) {
+            e.printStackTrace();
+        }
     }
     public void loginBtnClick(ActionEvent actionEvent) {
         String id = idTextField.getText().toString();
         String password = pwTextField.getText().toString();
-//        getSmartPage(id, password);
-//        getEclassPage(id, password);
-        subjectPageController.call(2, eclassDAOArrayList, smartATDAOArrayList);
+//        getWebExPage(id, password);
+        getSmartPage(id, password);
+        getEclassPage(id, password);
+        subjectPageController.call(subjectSize, eclassDAOArrayList, smartATDAOArrayList, num, name);
     }
     public void checkIDPWSave() {
         if(!saveIDPW.get("id", "").equals("") && !saveIDPW.get("pw", "").equals("")) {
@@ -262,13 +283,14 @@ public class LoginController {
     public void inputIdText(KeyEvent actionEvent) {
         if(idPwSave.isSelected()) {
             saveIDPW.put("id", idTextField.getText());
-
         }
+        saveIDPW.put("webExLoginId", idTextField.getText());
     }
 
     public void inputPwText(KeyEvent actionEvent) {
         if(idPwSave.isSelected()) {
             saveIDPW.put("pw", pwTextField.getText());
         }
+        saveIDPW.put("webExLoginPw", pwTextField.getText());
     }
 }

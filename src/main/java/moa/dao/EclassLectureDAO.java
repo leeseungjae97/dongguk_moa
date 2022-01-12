@@ -3,12 +3,12 @@ package moa.dao;
 import org.openqa.selenium.WebElement;
 
 public class EclassLectureDAO {
-    WebElement startLectureBtn;
+    String startLectureBtnName;
     WebElement prevLecture;
     String date;
 
-    public EclassLectureDAO(WebElement startLectureBtn, WebElement prevLecture, String date) {
-        this.startLectureBtn = startLectureBtn;
+    public EclassLectureDAO(String startLectureBtnName, WebElement prevLecture, String date) {
+        this.startLectureBtnName = startLectureBtnName;
         this.prevLecture = prevLecture;
         this.date = date;
     }
@@ -16,18 +16,18 @@ public class EclassLectureDAO {
     @Override
     public String toString() {
         return "EclassDAO{" +
-                "startLectureBtn=" + startLectureBtn +
+                "startLectureBtn=" + startLectureBtnName +
                 ", prevLecture=" + prevLecture +
                 ", date='" + date + '\'' +
                 '}';
     }
 
-    public WebElement getStartLectureBtn() {
-        return startLectureBtn;
+    public String getStartLectureBtnName() {
+        return startLectureBtnName;
     }
 
-    public void setStartLectureBtn(WebElement startLectureBtn) {
-        this.startLectureBtn = startLectureBtn;
+    public void setStartLectureBtnName(String startLectureBtnName) {
+        this.startLectureBtnName = startLectureBtnName;
     }
 
     public WebElement getPrevLecture() {

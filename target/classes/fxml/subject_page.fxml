@@ -27,7 +27,7 @@
                     <Insets top="5" right="5" left="5"/>
                 </padding>
                 <HBox fx:id="scrollTop" prefWidth="535">
-                    <VBox fx:id="infoBack" prefHeight="110" prefWidth="150" spacing="9">
+                    <VBox fx:id="infoBack" prefHeight="70" prefWidth="150">
                         <padding>
                             <Insets left="5" top="5"/>
                         </padding>
@@ -41,17 +41,12 @@
                                 <Insets right="5"/>
                             </padding>
                         </HBox>
-                        <HBox>
-                            <Label fx:id="majorText" text="학부 : "/>
-                            <Label fx:id="major" text="컴퓨터공학과"/>
+                        <HBox alignment="CENTER_LEFT">
+                            <Label fx:id="name"/>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT">
                             <Label fx:id="numText" text="학번 : "/>
-                            <Label fx:id="num" text="2016210162"/>
-                        </HBox>
-                        <HBox>
-                            <Label fx:id="gradeText" text="학년 : "/>
-                            <Label fx:id="grade" text="3학년"/>
+                            <Label fx:id="num"/>
                         </HBox>
                     </VBox>
 
@@ -59,7 +54,11 @@
                         <Label fx:id="mySubjectsText" text="내 수업 정보"/>
                     </HBox>
                 </HBox>
-                <VBox fx:id="subjectListVBox" VBox.vgrow="ALWAYS" alignment="CENTER"/>
+                <VBox fx:id="subjectListVBox" VBox.vgrow="ALWAYS" alignment="TOP_CENTER" spacing="30">
+                    <padding>
+                        <Insets top="20"/>
+                    </padding>
+                </VBox>
             </VBox>
         </ScrollPane>
     </center>

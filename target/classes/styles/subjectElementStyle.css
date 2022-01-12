@@ -12,15 +12,27 @@ root {
 #background {
     -fx-background-color: -backColor1;
 }
-#lectureName, #lectureWeek, #date, #startLectureText {
+#lectureName, #lectureWeek {
     -fx-background-color: -backColor1;
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-family: "Segoe UI";
     -fx-font-weight: bold;
 }
+#date, #startLectureText {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+}
 #startLectureBtn {
+    -fx-background-insets: 3 0 0 0;
     -fx-background-color: -dGreen;
+    -fx-background-radius: 5px;
+}
+#startLectureBtn:hover, #startLectureBtn:hover .label {
+    -fx-text-fill: black;
+    -fx-background-color: white;
     -fx-background-radius: 5px;
 }
 #currentLectureInfoBox, #lectureATBox {
@@ -50,5 +62,6 @@ root {
     -fx-font-size: 15px;
 }
 #bottomLine {
-    -fx-background-color: -dColor1;
+    -fx-border-color: -dColor1;
+    -fx-border-width: 0.5;
 }

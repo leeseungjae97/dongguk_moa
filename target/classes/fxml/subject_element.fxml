@@ -4,39 +4,47 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
-<HBox fx:id="background" xmlns="http://javafx.com/javafx"
+<VBox fx:id="background" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="moa.controllers.SubjectElementPageController"
-      prefHeight="139" prefWidth="476"
+      prefHeight="139" prefWidth="476" alignment="TOP_CENTER" spacing="20"
       stylesheets="/styles/subjectElementStyle.css">
-    
+
 <!--  139, 476  -->
-    <VBox fx:id="currentLectureInfoBox" prefWidth="230" prefHeight="120">
-<!--    230 120    -->
-        <padding>
-            <Insets top="5" bottom="5"/>
-        </padding>
-        <HBox VBox.vgrow="ALWAYS">
-            <Label fx:id="lectureName"/>
-            <Label fx:id="lectureWeek" alignment="CENTER_RIGHT"/>
-        </HBox>
-        <HBox fx:id="startLectureBtn" alignment="BOTTOM_CENTER">
-            <Label fx:id="date"/>
-            <Label fx:id="startLectureText"/>
-        </HBox>
-    </VBox>
-    <VBox fx:id="lectureATBox" prefWidth="230" prefHeight="120">
-        <!--    230 120    -->
-        <HBox>
-            <Label fx:id="green" prefHeight="50" prefWidth="50"/>
-            <!--    50 50    -->
-            <Label fx:id="red" prefHeight="50" prefWidth="50"/>
-            <Label fx:id="blue" prefHeight="50" prefWidth="50"/>
-        </HBox>
-        <HBox>
-            <Label fx:id="gray1"/>
-            <Label fx:id="gray2"/>
-        </HBox>
-    </VBox>
-    <Line fx:id="bottomLine" scaleX="0.3" HBox.hgrow="ALWAYS" />
-</HBox>
+    <HBox alignment="CENTER" prefWidth="476" prefHeight="139" spacing="15">
+        <VBox fx:id="currentLectureInfoBox" prefWidth="230" prefHeight="120" alignment="CENTER">
+            <!--    230 120    -->
+            <padding>
+                <Insets top="15" bottom="15" left="15" right="15"/>
+            </padding>
+            <HBox VBox.vgrow="ALWAYS" maxWidth="200" minWidth="200">
+                <Label fx:id="lectureName" minWidth="150"/>
+                <Label fx:id="lectureWeek" alignment="CENTER_RIGHT" minWidth="50"/>
+            </HBox>
+            <HBox fx:id="startLectureBtn" maxWidth="200" minWidth="200" prefHeight="25"
+                  alignment="BOTTOM_CENTER" onMouseClicked="#startLectureBtnClick">
+                <padding>
+                    <Insets left="5" right="5"/>
+                </padding>
+                <Label fx:id="date" minWidth="95"/>
+                <Label fx:id="startLectureText" alignment="CENTER_RIGHT" textAlignment="RIGHT" minWidth="95"/>
+            </HBox>
+        </VBox>
+
+        <VBox fx:id="lectureATBox" prefWidth="230" prefHeight="120" alignment="CENTER" spacing="10">
+            <!--    230 120    -->
+            <HBox prefWidth="200" alignment="CENTER" spacing="25">
+                <Label fx:id="green" prefHeight="50" prefWidth="50" alignment="CENTER" textAlignment="CENTER"/>
+                <!--    50 50    -->
+                <Label fx:id="red" prefHeight="50" prefWidth="50" alignment="CENTER" textAlignment="CENTER"/>
+                <Label fx:id="blue" prefHeight="50" prefWidth="50" alignment="CENTER" textAlignment="CENTER"/>
+            </HBox>
+            <HBox prefWidth="200" alignment="CENTER" spacing="45">
+                <Label fx:id="gray1" textAlignment="CENTER"/>
+                <Label fx:id="gray2" textAlignment="CENTER"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <HBox fx:id="bottomLine" prefWidth="200" maxWidth="200" prefHeight="1" alignment="CENTER"/>
+</VBox>

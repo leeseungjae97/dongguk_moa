@@ -20,28 +20,28 @@ public class SubjectPageController {
     public HBox topBar;
     public Label minimum;
     public Label close;
+
     public VBox subjectListVBox;
     public ScrollPane listViewScroll;
-    public Label major;
-    public Label grade;
+    public Label name;
     public Label num;
+
     public HBox mySubjectTextBack;
     public VBox infoBack;
+
     private ArrayList<EclassDAO> eclassDAOArrayList;
     private ArrayList<SmartATDAO> smartATDAOArrayList;
     private int subjectSize;
+    private String numStr;
+    private String nameStr;
 
-    public SubjectPageController() {
-        System.out.println("call const");
-    }
+    public SubjectPageController() { }
     private void setSize() {
         mySubjectTextBack.setPrefWidth(listViewScroll.getPrefWidth() - infoBack.getPrefWidth());
     }
-    public void call(int subjectSize, ArrayList<EclassDAO> eclassDAOArrayList, ArrayList<SmartATDAO> smartATDAOArrayList){
-        System.out.println(subjectSize);
+    public void call(int subjectSize, ArrayList<EclassDAO> eclassDAOArrayList, ArrayList<SmartATDAO> smartATDAOArrayList
+                ,String num, String name){
         try {
-            eclassDAOArrayList = new ArrayList<>();
-            smartATDAOArrayList = new ArrayList<>();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/subject_page.fxml"));
 
@@ -49,6 +49,8 @@ public class SubjectPageController {
             subjectPageController.setEclassDAOArrayList(eclassDAOArrayList);
             subjectPageController.setSmartATDAOArrayList(smartATDAOArrayList);
             subjectPageController.setSubjectSize(subjectSize);
+            subjectPageController.setMyInfo(num, name);
+
             loader.setController(subjectPageController);
 
             Parent root = loader.load();
@@ -66,27 +68,37 @@ public class SubjectPageController {
     void initialize() {
         CustomTopBar.configurationTopBar(topBar, minimum, close);
         setSize();
+        setLabelData();
         addSubjectElement();
+
     }
-    public void addSubjectElement() {
+
+    private void setLabelData() {
+        num.setText(numStr);
+        name.setText(nameStr);
+    }
+
+    private void addSubjectElement() {
+        System.out.println(eclassDAOArrayList.size() + " : " + smartATDAOArrayList.size());
         for (int i = 0; i < subjectSize; i++) {
             try {
-                System.out.println("addSubject");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/subject_element.fxml"));
-                HBox subjectElement = loader.load();
+                VBox subjectElement = loader.load();
                 SubjectElementPageController subjectElementController = loader.getController();
-//                subjectElementController.setData(eclassDAOArrayList.get(i), smartATDAOArrayList.get(i));
-                subjectElementController.setData(null, null);
+                subjectElementController.setData(eclassDAOArrayList.get(i), smartATDAOArrayList.get(i));
+//                subjectElementController.setData(null, null);
                 subjectListVBox.getChildren().add(subjectElement);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
+    }
+    public void setMyInfo(String num, String name) {
+        numStr = num;
+        nameStr = name;
     }
 
     public void setSubjectSize(int n) {
-        System.out.println(subjectSize);
         subjectSize = n;
     }
 

@@ -15,9 +15,15 @@ root {
     -fx-background-color: -backColor1;
 }
 
-#majorText, #numText, #gradeText, #major, #num, #grade {
+#majorText, #numText, #gradeText, #num {
     -fx-text-fill: white;
     -fx-font-size: 11px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+}
+#name {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
     -fx-font-family: "Segoe UI";
     -fx-font-weight: bold;
 }
