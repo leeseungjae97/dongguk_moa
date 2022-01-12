@@ -31,6 +31,7 @@ public class EclassDAO {
 
     public void addWeek(String week) {
         this.weeks.add(week);
+        System.out.println("weeks size : " + weeks.size());
     }
 
     public ArrayList<EclassLectureDAO> getEclassLectureDAOArrayList() {

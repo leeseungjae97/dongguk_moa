@@ -20,6 +20,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -85,6 +86,7 @@ public class LoginController {
             WebElement subjectTable = smartATDriver.findElement(By.id("lecture"));
             List<WebElement> subjectSize = subjectTable.findElements(By.cssSelector("#lecture > tbody > tr"));
 
+//            System.out.println("smart : " + subjectSize.size());
             for (int i = 0; i < subjectSize.size(); i++) {
                 WebElement clickSubjectTable = smartATDriver.findElement(By.id("lecture"));
                 List<WebElement> clickableSubjects = clickSubjectTable.findElements(By.cssSelector("#lecture > tbody > tr"));
@@ -214,7 +216,7 @@ public class LoginController {
                     .until(ExpectedConditions.invisibilityOfElementLocated(By.name("i.icon-list-white")));
 
             List<WebElement> subjectVideos = eClassDriver.findElements(By.cssSelector("div[class='video on']"));
-            System.out.println(subjectVideos.size());
+//            System.out.println(subjectVideos.size());
             for (WebElement element : subjectVideos) {
                 String startLectureBtn = "";
                 WebElement prevLecture = null;
@@ -230,13 +232,15 @@ public class LoginController {
 
                 EclassLectureDAO eclassLectureDAO = new EclassLectureDAO(startLectureBtn, prevLecture, date);
                 eclassDAO.addEclassLectureDAO(eclassLectureDAO);
+                System.out.println(eclassDAO.getEclassLectureDAOArrayList().size());
             }
 
             List<WebElement> cols = eClassDriver.findElements(By.cssSelector("th[scope='col']"));
             for (int i = 0; i < cols.size(); i++) {
+
                 System.out.println(cols.get(i).getText());
                 String week = cols.get(i).getText();
-                eclassDAO.addWeek(week);
+                if(!week.equals("")) eclassDAO.addWeek(week);
             }
 
             eClassDriver.navigate().back();
@@ -261,6 +265,8 @@ public class LoginController {
         if(!saveIDPW.get("id", "").equals("") && !saveIDPW.get("pw", "").equals("")) {
             idTextField.setText(saveIDPW.get("id", ""));
             pwTextField.setText(saveIDPW.get("pw", ""));
+            saveIDPW.put("webExLoginId", saveIDPW.get("id", ""));
+            saveIDPW.put("webExLoginPw", saveIDPW.get("pw", ""));
             idPwSave.setSelected(true);
         }
     }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      alignment="CENTER"
+      fx:id="noSubjectDayPageBack"
+      xmlns:fx="http://javafx.com/fxml"
+      prefHeight="80.0" prefWidth="250.0" maxWidth="250.0" stylesheets="/styles/subjectElementStyle.css">
+    <Label fx:id="noSubjectTodayText" text="오늘은 수업이 없어요" alignment="CENTER" textAlignment="CENTER"/>
+</VBox>

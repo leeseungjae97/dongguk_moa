@@ -3,6 +3,7 @@ package moa.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import moa.dao.EclassDAO;
 import moa.dao.EclassLectureDAO;
@@ -10,6 +11,7 @@ import moa.dao.SmartATDAO;
 import moa.util.StringUtil;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,58 +32,67 @@ public class SubjectElementPageController {
     public Label gray2;
     public Label startLectureText;
     public Label date;
+    public HBox startLectureBtn;
 
     private Preferences saveIDPW = Preferences.userRoot();
     private EclassLectureDAO eclassLectureDAO;
     private SmartATDAO smartATDAO;
 
     private String lectureDateStr;
+    private String eclassLectureName;
     
     @FXML
     void initialize() {
     }
 
     public void setData(EclassDAO eclassDAO, SmartATDAO smartATDAO) {
-        eclassLectureDAO = eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size()-1);
-        lectureName.setText(eclassDAO.getSubjectName());
         //3주차학습목표보기\n2022-01-03 ~ 2022-01-09 -> 3주차
         //week은 한 subject당 최대 3개.
         //당장은 다시보기 안할꺼니까 제일 앞에꺼 하나만 가져오면됨.
 
         //미리 강의를 만들어놓는것도 생각.
         //제일 앞 화상강의 시작이 들어있는곳.
-        lectureWeek.setText("15주차");
-        System.out.println(eclassDAO.getWeeks().get(eclassDAO.getWeeks().size()-1));
+        eclassLectureDAO = eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size()-1);
+        lectureName.setText(eclassDAO.getSubjectName());
+        lectureWeek.setText(StringUtil.lectureWeek(eclassDAO.getWeeks().get(eclassDAO.getWeeks().size()-1)));
 
         //마찬가지로 다시보기를 제외한 현재 강의만 가져오면된다.
-        date.setText(eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size() - 1).getDate());
-        System.out.println(eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size() - 1).getDate());
+//        date.setText(eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size() - 1).getDate());
         lectureDateStr = StringUtil.lectureDate(eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size() - 1).getDate());
+        eclassLectureName = StringUtil.getLectureName(eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size() - 1).getDate());
 
+        date.setText(lectureDateStr);
         if(!eclassDAO.getEclassLectureDAOArrayList().get(eclassDAO.getEclassLectureDAOArrayList().size() - 1).getStartLectureBtnName().equals("출결정보")) {
             startLectureText.setText("회상강의 시작");
         }else {
-            startLectureText.setText(" ");
+            startLectureText.setText("등록된 강의없음");
+            startLectureText.setStyle("-fx-font-size: 11px");
+            startLectureBtn.setStyle("-fx-background-color: -dRed;");
+            if(startLectureBtn.isHover()) {
+                startLectureBtn.setStyle("-fx-background-color: -dRed;");
+                startLectureText.setStyle("-fx-background-color: -dRed;-fx-font-size: 11px");
+                date.setStyle("-fx-background-color: -dRed");
+            }
+
         }
 
-
-        green.setText("출석\n" + smartATDAO.getGreen());
-        red.setText("결석\n" + smartATDAO.getRed());
-        blue.setText("지각\n" + smartATDAO.getBlue());
-        gray1.setText("출석인정\n" + smartATDAO.getGray1());
-        gray2.setText("조퇴(이탈)\n" + smartATDAO.getGray2());
+//        green.setText("출석\n" + smartATDAO.getGreen());
+//        red.setText("결석\n" + smartATDAO.getRed());
+//        blue.setText("지각\n" + smartATDAO.getBlue());
+//        gray1.setText("출석인정\n" + smartATDAO.getGray1());
+//        gray2.setText("조퇴(이탈)\n" + smartATDAO.getGray2());
 
 //        lectureName.setText("과제중심문제해결");
 //        lectureWeek.setText("3주차");
 //
 //        startLectureText.setText("회상강의 시작");
 //        date.setText("21.01.10");
-//
-//        green.setText("출석\n9회");
-//        red.setText("결석\n9회");
-//        blue.setText("지각\n9회");
-//        gray1.setText("출석인정\n9회");
-//        gray2.setText("조퇴(이탈)\n9회");
+
+        green.setText("출석\n9회");
+        red.setText("결석\n9회");
+        blue.setText("지각\n9회");
+        gray1.setText("출석인정\n9회");
+        gray2.setText("조퇴(이탈)\n9회");
     }
 
     public void startLectureBtnClick(MouseEvent mouseEvent) {
@@ -93,7 +104,12 @@ public class SubjectElementPageController {
             new OkBtnPopupController().call();
             return;
         }
-        WebDriver webexDriver = new ChromeDriver();
+        ChromeOptions chromeHeadlessOption;
+        chromeHeadlessOption = new ChromeOptions();
+        chromeHeadlessOption.addArguments(DRIVER_SIZE);
+        chromeHeadlessOption.addArguments(NO_SANDBOX);
+
+        WebDriver webexDriver = new ChromeDriver(chromeHeadlessOption);
         try {
             webexDriver.get(WEBEX + id + WEBEX_EMAIL_URL);
 
@@ -121,10 +137,13 @@ public class SubjectElementPageController {
 
 
             for (WebElement subject: subjects) {
-
-                subject.findElement(By.cssSelector("div[class='col col_3 col_0_3']"));
+                WebElement subjectElement = subject.findElement(By.cssSelector("div[class='col col_3 col_0_3']"));
+                subjectElement.findElement(By.cssSelector("div[class='meeting_topic home']"));
+                if(StringUtil.findTextInText(subjectElement.getText(), eclassLectureName)) subjectElement.click();
 
             }
+//            webexDriver.manage().window().
+//            webexDriver.close();
 
         } catch(UnhandledAlertException e) {
             new OkBtnPopupController().call();

@@ -22,7 +22,7 @@
     </top>
     <center>
         <ScrollPane fx:id="listViewScroll" prefWidth="550" prefHeight="500">
-            <VBox fx:id="scrollBack" prefWidth="535" spacing="5" prefHeight="500">
+            <VBox fx:id="scrollBack" prefWidth="535" spacing="5" prefHeight="500" maxHeight="-Infinity">
                 <padding>
                     <Insets top="5" right="5" left="5"/>
                 </padding>
@@ -54,9 +54,9 @@
                         <Label fx:id="mySubjectsText" text="내 수업 정보"/>
                     </HBox>
                 </HBox>
-                <VBox fx:id="subjectListVBox" VBox.vgrow="ALWAYS" alignment="TOP_CENTER" spacing="30">
+                <VBox fx:id="subjectListVBox" VBox.vgrow="ALWAYS" alignment="TOP_CENTER" spacing="40" maxHeight="-Infinity">
                     <padding>
-                        <Insets top="20"/>
+                        <Insets top="20" bottom="40"/>
                     </padding>
                 </VBox>
             </VBox>

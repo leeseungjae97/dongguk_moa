@@ -7,12 +7,12 @@
 <VBox fx:id="background" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="moa.controllers.SubjectElementPageController"
-      prefHeight="139" prefWidth="476" alignment="TOP_CENTER" spacing="20"
+      minHeight="139" prefHeight="139" prefWidth="476" alignment="TOP_CENTER" spacing="20"
       stylesheets="/styles/subjectElementStyle.css">
 
 <!--  139, 476  -->
-    <HBox alignment="CENTER" prefWidth="476" prefHeight="139" spacing="15">
-        <VBox fx:id="currentLectureInfoBox" prefWidth="230" prefHeight="120" alignment="CENTER">
+    <HBox alignment="CENTER" prefWidth="476" minHeight="139" prefHeight="139" spacing="15">
+        <VBox fx:id="currentLectureInfoBox" minHeight="120" prefWidth="230" prefHeight="120" alignment="CENTER">
             <!--    230 120    -->
             <padding>
                 <Insets top="15" bottom="15" left="15" right="15"/>
@@ -27,11 +27,11 @@
                     <Insets left="5" right="5"/>
                 </padding>
                 <Label fx:id="date" minWidth="95"/>
-                <Label fx:id="startLectureText" alignment="CENTER_RIGHT" textAlignment="RIGHT" minWidth="95"/>
+                <Label fx:id="startLectureText" prefHeight="25" alignment="CENTER_RIGHT" textAlignment="CENTER" minWidth="95"/>
             </HBox>
         </VBox>
 
-        <VBox fx:id="lectureATBox" prefWidth="230" prefHeight="120" alignment="CENTER" spacing="10">
+        <VBox fx:id="lectureATBox" minHeight="120" prefWidth="230" prefHeight="120" alignment="CENTER" spacing="10">
             <!--    230 120    -->
             <HBox prefWidth="200" alignment="CENTER" spacing="25">
                 <Label fx:id="green" prefHeight="50" prefWidth="50" alignment="CENTER" textAlignment="CENTER"/>

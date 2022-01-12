@@ -8,7 +8,9 @@ public class StringArgu {
     public final static String WEBEX_EMAIL_URL = "%40dongguk.ac.kr";
     public final static String WEBEX_EMAIL = "@dongguk.ac.kr";
 
-    public final static String DRIVER_HEADLESS = "headless";
+    public final static String DRIVER_HEADLESS = "--headless";
+    public final static String DRIVER_SIZE = "--window-size=800,800";
+    public final static String NO_SANDBOX = "--no-sandbox";
     public final static String WEBDRIVER_TYPE_CHROME = "webdriver.chrome.driver";
     public final static String WEBDRIVER_PATH = "src/main/resources/chromedriver.exe";
 }
